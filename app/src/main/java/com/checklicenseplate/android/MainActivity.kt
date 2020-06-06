@@ -7,6 +7,8 @@ import android.database.sqlite.SQLiteOpenHelper
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
@@ -43,31 +45,6 @@ class MainActivity : AppCompatActivity() {
 
         // 数据库文件存放在 /data/data/<package>/databases目录
         val dbHelper = MyDBHelper(this, "LicensePlate.db", 1)
-        // 声明鼠标点击事件
-        /*createDatabase.setOnClickListener {
-            // 调用getWriteableDatabase()方法
-            // 打开数据库,返回操作对象;如果不存在,则创建,即调用onCreate()方法
-            dbHelper.writableDatabase
-        }*/
-
-        addData.setOnClickListener {
-            // 调用getWriteableDatabase()方法
-            // 打开数据库,返回操作对象;如果不存在,则创建,即调用onCreate()方法
-            /* val db = dbHelper.writableDatabase
-             // 组装数据
-             val values1 = ContentValues().apply {
-                 put("name", "coda")
-                 put("author", "me")
-                 put("pages", 99)
-                 put("price", 0)
-             }
-             // 插入数据;第一个参数是表名,第二个用于在未指定添加数据的情况下给某些可为空的列
-             // 自动赋值NULL,第三个是一个ContentValues对象,一行数据
-             db.insert("Book", null, values1)*/
-
-            val intent = Intent(this, InsertActivity::class.java)
-            startActivity(intent)
-        }
 
         searchData.setOnClickListener {
             val db = dbHelper.writableDatabase
@@ -102,6 +79,25 @@ class MainActivity : AppCompatActivity() {
         val adapter = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, data)
         // 实际调用listView.setAdapter()方法
         listView.adapter = adapter
+
+
+    }
+
+    // 给当前Activity创建菜单
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu, menu)
+        return true
+    }
+
+    // 定义响应菜单事件
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.add_item ->
+                startActivity(Intent(this, InsertActivity::class.java))
+            R.id.remove_item ->
+                Toast.makeText(this, "删除功能暂未开放", Toast.LENGTH_SHORT).show()
+        }
+        return true
     }
 }
 

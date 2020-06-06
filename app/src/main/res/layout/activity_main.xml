@@ -7,12 +7,6 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/addData"
-        android:text="添加数据" />
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:id="@+id/searchData"
         android:text="查找" />
 
@@ -20,4 +14,5 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/listView"/>
+
 </LinearLayout>
