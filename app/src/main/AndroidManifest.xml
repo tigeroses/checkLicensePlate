@@ -9,7 +9,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+
+        <activity android:name=".InsertActivity"
+            android:label="插入页面"/>
+
+        <activity android:name=".MainActivity"
+            android:label="查找页面">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
