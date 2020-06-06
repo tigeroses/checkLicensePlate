@@ -37,7 +37,7 @@ class MyDBHelper(val context: Context, name: String, version: Int) :
 
 class MainActivity : AppCompatActivity() {
 
-    private val data = listOf("1","2","3","4","1","2","3","4","1","2","3","4","1","2","3","4")
+    /*private val data = listOf("1","2","3","4","1","2","3","4","1","2","3","4","1","2","3","4")*/
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,9 +51,16 @@ class MainActivity : AppCompatActivity() {
             // 查询方式1
             //val cursor = db.query("Book", null, null, null, null, null, null)
             // 查询方式2
-            val cursor = db.rawQuery("select * from LicensePlate", null)
-            var i = 0
-            var list = ArrayList<String>()
+            var inputText = editInput.text.toString()
+            var cursor = db.rawQuery("select * from LicensePlate", null)
+            if (inputText.isNotEmpty()) {
+                cursor = db.rawQuery("select * from LicensePlate where License like '%$inputText%'", null)
+            }
+
+
+
+
+            var list = ArrayList<Item>()
             if (cursor.moveToFirst()) {
                 do {
                     val community = cursor.getString(cursor.getColumnIndex("community"))
@@ -64,23 +71,15 @@ class MainActivity : AppCompatActivity() {
                     val other = cursor.getString(cursor.getColumnIndex("other"))
                     val string: String = community + " " + building + " " + room + " " + owner +
                             " " + license + " " + other
-                    list.add(string)
-                    i += 1
+                    list.add(Item(string))
                 } while (cursor.moveToNext())
             }
             cursor.close()
             // 借助适配器将数据传给ListView控件
-            val adapter = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, list)
+            val adapter = ItemAdapter(this, R.layout.result_item, list)
             // 实际调用listView.setAdapter()方法
             listView.adapter = adapter
         }
-
-        // 借助适配器将数据传给ListView控件
-        val adapter = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, data)
-        // 实际调用listView.setAdapter()方法
-        listView.adapter = adapter
-
-
     }
 
     // 给当前Activity创建菜单

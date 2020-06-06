@@ -11,10 +11,10 @@
         android:theme="@style/AppTheme">
 
         <activity android:name=".InsertActivity"
-            android:label="插入页面"/>
+            android:label="添加"/>
 
         <activity android:name=".MainActivity"
-            android:label="查找页面">
+            android:label="查询车牌">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
